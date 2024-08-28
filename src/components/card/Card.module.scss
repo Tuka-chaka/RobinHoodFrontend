@@ -1,0 +1,11 @@
+.card {
+    background-color: brown;
+    width: 200px;
+    height: 300px;
+    border-radius: 20px;
+    transition: margin-top 0.1s ease;
+    &:hover {
+      margin-top: -260px;
+      box-shadow: 0 0 10px 0 rgb(189, 117, 58); 
+    }
+}
