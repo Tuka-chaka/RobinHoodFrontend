@@ -1,13 +1,14 @@
 import {React, useEffect, useMemo, useState} from 'react'
 import styles from './GameMap.module.scss'
 import CityMarker from '../../ui/cityMarker/CityMarker'
-import { ArcherContainer, ArcherElement } from 'react-archer'
+import { ArcherContainer } from 'react-archer'
 
 const GameMap= () => {
 
   // todo: это должно быть на сервере
   const [cities, setCities] = useState([
     {
+      "id": "0",
       "name": "Энсли",
       "type": "forest",
       "x" : "8",
@@ -19,6 +20,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "1",
       "name": "Барнсдэйл",
       "type": "forest",
       "x" : "27",
@@ -30,6 +32,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "2",
       "name": "Клипстоун",
       "type": "forest",
       "x" : "48",
@@ -41,6 +44,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "3",
       "name": "Донкастер",
       "type": "forest",
       "x" : "1",
@@ -52,6 +56,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "4",
       "name": "Эдвинстоув",
       "type": "forest",
       "x" : "13",
@@ -64,6 +69,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "5",
       "name": "Фарнсфилд",
       "type": "plain",
       "x" : "26",
@@ -77,6 +83,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "6",
       "name": "Глидторп",
       "type": "forest",
       "x" : "40",
@@ -88,6 +95,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "7",
       "name": "Хантингтон",
       "type": "forest",
       "x" : "50",
@@ -100,6 +108,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "8",
       "name": "Инглвуд",
       "type": "plain",
       "x" : "16",
@@ -112,6 +121,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "9",
       "name": "Джонсвуд",
       "type": "plain",
       "x" : "37",
@@ -125,6 +135,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "10",
       "name": "Ноттингем",
       "type": "capital",
       "x" : "26",
@@ -137,6 +148,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "11",
       "name": "Кирклис",
       "type": "forest",
       "x" : "52",
@@ -148,6 +160,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "12",
       "name": "Локсли",
       "type": "plain",
       "x" : "16",
@@ -160,6 +173,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "13",
       "name": "Мэнсфилд",
       "type": "plain",
       "x" : "38",
@@ -172,6 +186,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "14",
       "name": "Паплвик",
       "type": "plain",
       "x" : "27",
@@ -185,6 +200,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "15",
       "name": "Олертон",
       "type": "forest",
       "x" : "1",
@@ -197,6 +213,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "16",
       "name": "Трент",
       "type": "forest",
       "x" : "9",
@@ -208,6 +225,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "17",
       "name": "Сэйлс",
       "type": "forest",
       "x" : "1",
@@ -219,6 +237,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "18",
       "name": "Викарснест",
       "type": "forest",
       "x" : "29",
@@ -230,6 +249,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "19",
       "name": "Вэйкфилд",
       "type": "forest",
       "x" : "42",
@@ -242,6 +262,7 @@ const GameMap= () => {
       ]
     },
     {
+      "id": "20",
       "name": "Рэйвенсхед",
       "type": "forest",
       "x" : "50",
@@ -254,32 +275,58 @@ const GameMap= () => {
     },
   ])
 
-  const roads = useMemo(
-    () => {
-      let checkedPairs = []
-      return cities.map((city) => {
-          return ({
-            name: city.name
-            }
-          )
+  const createRoads = (cities) => {
+    let checkedPairs = []
+    let result = []
+    for (let city of cities) {
+      let neighbors = []
+      for (let connection of city.connections) {
+        let pair = new Set([city.name, connection])
+        let isNew = true
+        for (let checkedPair of checkedPairs) {
+          if (checkedPair.difference(pair).size === 0) {
+            isNew = false;
+          }
         }
-      )
-    },
+
+        if (isNew) {
+          neighbors.push(`archer${cities.find(city => city.name === connection).id}`)
+        }
+
+        checkedPairs.push(pair)
+      }
+
+      result[city.name] = neighbors
+    }
+
+    return(result)
+  }
+
+  const roads = useMemo(
+    () => createRoads(cities),
     [cities]
   );
 
-  useEffect(() => {
-    console.log(roads)
-  }, [roads])
+  // useEffect(() => {
+  //   console.log(roads)
+  // }, [roads])
 
   return (
+    <ArcherContainer endMarker={false} svgContainerStyle={{backgroundColor: "rgb(219, 182, 113)"}}>
     <div className={styles.gameMap}>
-      {cities.map(city => 
-        <CityMarker key={city.name} type={city.type} name={city.name} style={{left: `${city.x}vw`, top: `${city.y}vh`}}/>
-      )
-      }
-      {/* {connections.map(connection => <></>)} */}
+      
+        {cities.map(city => 
+          <CityMarker key={city.name}
+          type={city.type}
+          name={city.name}
+          archerId={`archer${city.id}`}
+          neighbors={roads[city.name]}
+          style={{left: `${city.x}vw`, top: `${city.y}vh`}}/>
+        )
+        }
+      
     </div>
+    </ArcherContainer>
   )
 }
 

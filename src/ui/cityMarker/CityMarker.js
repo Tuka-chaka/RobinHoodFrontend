@@ -1,8 +1,11 @@
 import React from 'react'
 import styles from './CityMarker.module.scss'
 import { GiVillage,  GiChurch,  GiCastle } from "react-icons/gi";
+import { ArcherElement } from 'react-archer';
 
-const CityMarker = ({style, type, name}) => {
+const CityMarker = ({style, type, name, neighbors, archerId}) => {
+
+  console.log(archerId, neighbors.map(neighbor => ({targetId: neighbor, targetAnchor: 'middle', sourceAnchor: 'middle'})))
 
   const icons = {
     "forest": <GiVillage style={{ width: '100%', height: 'auto' }}/>,
@@ -12,7 +15,16 @@ const CityMarker = ({style, type, name}) => {
 
   return (
     <div className={styles.cityMarker} style={style}>
-      <div className={`${styles.icon} ${type === 'capital' ? styles.capital : ''} ${name}`}>{icons[type]}</div>
+      <ArcherElement id={archerId} relations={
+        neighbors.map(neighbor => ({
+          targetId: neighbor,
+          targetAnchor: 'middle',
+          sourceAnchor: 'middle',
+          style: {strokeDasharray: '5,5', strokeColor: "#222222", strokeWidth: 4 }
+        }))}>
+
+        <div className={`${styles.icon} ${type === 'capital' ? styles.capital : ''} ${name}`}>{icons[type]}</div>
+      </ArcherElement>
       <div className={`${styles.nameTag} ${type === 'plain' ? styles.plain : ''}`}>{name}</div>
     </div>
   )
