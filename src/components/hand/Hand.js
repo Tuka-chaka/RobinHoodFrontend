@@ -7,7 +7,7 @@ const Hand = () => {
     <div className={styles.hand}>
         {/* Карты отражать циклом, добавляя смещение пропом style 
         ToDo: звук при ховере*/}
-      <Card className={styles.card} content={'Father Tuc'} isFaceUp/>
+      <Card className={styles.card} content={'Отец Крюк'} isFaceUp/>
       <Card className={styles.card} style={{left: '170px'}}/>
     </div>
   )
