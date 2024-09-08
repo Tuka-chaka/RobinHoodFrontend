@@ -5,8 +5,6 @@ import { ArcherElement } from 'react-archer';
 
 const CityMarker = ({style, type, name, neighbors, archerId}) => {
 
-  console.log(archerId, neighbors.map(neighbor => ({targetId: neighbor, targetAnchor: 'middle', sourceAnchor: 'middle'})))
-
   const icons = {
     "forest": <GiVillage style={{ width: '100%', height: 'auto' }}/>,
     "plain": <GiChurch style={{ width: '100%', height: 'auto' }}/>,
@@ -20,7 +18,7 @@ const CityMarker = ({style, type, name, neighbors, archerId}) => {
           targetId: neighbor,
           targetAnchor: 'middle',
           sourceAnchor: 'middle',
-          style: {strokeDasharray: '5,5', strokeColor: "#222222", strokeWidth: 4 }
+          style: {strokeDasharray: '5,5', strokeColor: "#c48647", strokeWidth: 4 }
         }))}>
 
         <div className={`${styles.icon} ${type === 'capital' ? styles.capital : ''} ${name}`}>{icons[type]}</div>

@@ -2,13 +2,17 @@ import React from 'react'
 import Card from '../card/Card.js'
 import styles from './Hand.module.scss'
 
-const Hand = () => {
+const Hand = ({cards}) => {
+  console.log(cards)
   return (
     <div className={styles.hand}>
-        {/* Карты отражать циклом, добавляя смещение пропом style 
-        ToDo: звук при ховере*/}
-      <Card className={styles.card} content={'Отец Крюк'} isFaceUp/>
-      <Card className={styles.card} style={{left: '170px'}}/>
+      {
+        cards.map((card, index) => <Card key={card.name}
+        stats={card.stats}
+        className={styles.card}
+        content={card.name}
+        style={{left: `${index * 10}vw`}}/>)
+      }
     </div>
   )
 }

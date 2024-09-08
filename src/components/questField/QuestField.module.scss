@@ -1,4 +1,9 @@
 .questField {
+    padding-top: 3vw;
     width: 15vw;
-    background-color: beige;
+    // background-color: beige;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 1vw;
 }

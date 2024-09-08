@@ -228,7 +228,7 @@ const GameMap= () => {
       "id": "17",
       "name": "Сэйлс",
       "type": "forest",
-      "x" : "1",
+      "x" : "2",
       "y" : "67",
       "connections" : [
         "Олертон",

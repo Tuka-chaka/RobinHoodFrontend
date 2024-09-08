@@ -4,8 +4,11 @@ import GameMap from '../components/gameMap/GameMap'
 import styles from './GameplayPage.module.scss'
 import Jail from '../components/jail/Jail'
 import QuestField from '../components/questField/QuestField'
+import OpponentHud from '../components/opponentHud/OpponentHud'
+import PopularityTracker from '../ui/popularityTracker/PopularityTracker'
 
-const GameplayPage = () => {
+const GameplayPage = ({socket, players, cities, myId}) => {
+
   return (
     <div>
       <div className={styles.fieldLayout}>
@@ -13,7 +16,9 @@ const GameplayPage = () => {
         <GameMap/>
         <QuestField/>
       </div>
-      <Hand/>
+      <Hand cards={players[myId].hand}/>
+      <OpponentHud/>
+      <PopularityTracker color='brown' isOwn/>
     </div>
   )
 }

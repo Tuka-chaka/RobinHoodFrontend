@@ -1,0 +1,11 @@
+.opponentHud {
+    position: fixed;
+    height: 100vh;
+    right: 1vh;
+    top: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1vw;
+}
